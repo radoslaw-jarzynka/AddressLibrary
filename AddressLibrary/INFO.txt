@@ -1,0 +1,50 @@
+﻿PROTOKÓŁ KOMUNIKACJI
+
+nazwy:
+	LRM - Link Resource Manager
+	 - Routing Controller
+	CC - Connection Controller
+	NCC - Network Call Controller
+	POL - Policy
+	DIR - Directory
+
+komunikacja przez chmurę:
+
+	CLOUD - CLIENT : "SENDER:MESSAGE"
+	będzie można zrobić w odbieraniu split Stringa względem pierwszego dwukropka i otrzymujemy nadawcę i wiadomość
+	CLIENT - CLOUD : "DESTINATION:MESSAGE"
+	analogicznie, chmura otrzymuje cel i treść wiadomości
+
+przestrzeń adresowa:
+
+	numerSieci.numerPodsieci.numerHosta
+
+zakładając jedną sieć i kilka podsieci adresy wyglądałyby w stylu 1.5.7 itp, trochę jak adresy IP
+RC i CC wiedziałyby której podsieci odpowiadają
+
+komunikacja między LRM:
+
+poprzez chmurę kablową wysyłanie wiadomości na VPI=0 VCI = 0 o treści "mojAdres"
+po np 5 sekundach LRM zakłada że zna wszystkich sąsiadów. Wie którzy z nich są w innych podsieciach (na podstawie adresów)
+
+komunikacja LRM - RC
+
+logowanie
+	LRM -> RC : HELLO mojAdres
+	RC -> LRM : jestJużTakiAdresWSieci ? ERROR : OK 
+		chyba rozumiecie o co tu chodzi xd
+	LRM -> RC : addr1 addr2 addr3... 
+		wysyłanie w jednej linii adresów wszystkich sąsiadów, na podstawie tej wiadomości RC tworzy graf sieci
+
+pytanie o wolne zasoby
+	RC -> LRM : ISLINKAVAILIBLE SNP
+		tutaj jest pytanie o to SNP, jak dokładnie zostanie ono opisane to zrobimy w przyszłości
+		może to być pytanie o łącze między klientami albo o VPI, nie wiem
+	LRM -> RC : czyWolne ? YES : NO
+	RC zmienia lub nie graf sieci
+
+pytanie o ścieżkę
+	CC -> RC : REQ_ROUTE addr1 addr2
+	RC oblicza ścieżkę, pyta się LRM po drodze czy jest dostępna, jeśli tak to ok jeśli nie to oblicza inną
+	RC -> CC addr1 addrPosredni1 addrPosredni2 addrPosredni3 addr2
+
