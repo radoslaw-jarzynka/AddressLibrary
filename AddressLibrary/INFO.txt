@@ -2,11 +2,15 @@
 
 nazwy:
 	LRM - Link Resource Manager
-	 - Routing Controller
-	CC - Connection Controller
+	RC - Routing Controller			jego adres to zawsze numerSieci.numerPodsieci.0
+	CC - Connection Controller		jego adres to zawsze numerSieci.numerPodsieci.1
 	NCC - Network Call Controller
 	POL - Policy
 	DIR - Directory
+
+logowanie do chmury:
+
+	CLIENT - CLOUD : HELLO myAddress
 
 komunikacja przez chmurę:
 
