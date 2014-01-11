@@ -50,7 +50,8 @@ pytanie o wolne zasoby
 	RC -> LRM : IS_LINK_AVAILIBLE SNP
 		tutaj jest pytanie o to SNP, jak dokładnie zostanie ono opisane to zrobimy w przyszłości
 		może to być pytanie o łącze między klientami albo o VPI, nie wiem
-	LRM -> RC : czyWolne ? YES : NO
+	LRM -> RC : czyWolne ? YES ADDR_DOCELOWY : NO ADDR_DOCELOWY 
+	LRM musi odpowiadać o którym łączu mówi!
 	RC zmienia lub nie graf sieci
 
 komunikacja CC - RC
