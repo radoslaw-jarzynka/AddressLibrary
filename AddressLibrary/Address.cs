@@ -80,6 +80,10 @@ namespace AddressLibrary
             else return false;
         }
 
+        public override int GetHashCode() {
+            return base.GetHashCode();
+        }
+
         public static bool operator !=(Address a1, Address a2) {
             return !(a1 == a2);
         }
