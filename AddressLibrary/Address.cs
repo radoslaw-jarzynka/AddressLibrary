@@ -18,7 +18,7 @@ namespace AddressLibrary
             this.host = host;
         }
 
-        public String toString() {
+        public override String ToString() {
             return network + "." + subnet + "." + host;
         }
     }
