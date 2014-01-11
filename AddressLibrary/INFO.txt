@@ -37,11 +37,14 @@ logowanie
 	LRM -> RC : HELLO mojAdres
 	RC -> LRM : jestJużTakiAdresWSieci ? ERROR : OK 
 		chyba rozumiecie o co tu chodzi xd
+
+pobranie listy podłączonych adresów (NA ŻĄDANIE RC)
+	RC -> LRM : REQ_TOPOLOGY
 	LRM -> RC : addr1 addr2 addr3... 
 		wysyłanie w jednej linii adresów wszystkich sąsiadów, na podstawie tej wiadomości RC tworzy graf sieci
 
 pytanie o wolne zasoby
-	RC -> LRM : ISLINKAVAILIBLE SNP
+	RC -> LRM : IS_LINK_AVAILIBLE SNP
 		tutaj jest pytanie o to SNP, jak dokładnie zostanie ono opisane to zrobimy w przyszłości
 		może to być pytanie o łącze między klientami albo o VPI, nie wiem
 	LRM -> RC : czyWolne ? YES : NO
