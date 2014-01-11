@@ -36,7 +36,7 @@ namespace AddressLibrary
         /// <param name="str">input string</param>
         /// <param name="addr">output Address object</param>
         /// <returns>czy sie udało?</returns>
-        public static bool TryParse(string str, out Address addr) {
+        public static bool TryParse(String str, out Address addr) {
             char[] delimiter = { '.' };
             String[] _strArray = str.Split(delimiter);
             if (_strArray.Length == 3) {
@@ -54,6 +54,34 @@ namespace AddressLibrary
                 addr = null;
                 return false;
             }
+        }
+
+        public static Address Parse(String str) {
+            char[] delimiter = { '.' };
+            String[] _strArray = str.Split(delimiter);
+            int _net = int.Parse(_strArray[0]);
+            int _sub = int.Parse(_strArray[1]);
+            int _host = int.Parse(_strArray[2]);
+            Address addr = new Address(_net, _sub, _host);
+            return addr;
+        }
+
+        public override bool Equals(object addr) {
+            Address _addr = addr as Address;
+            if ((object)addr == null) {
+                return false;
+            }
+            if (_addr.network == this.network && _addr.subnet == this.subnet && _addr.host == this.host) return true;
+            else return false;
+        }
+
+        public static bool operator ==(Address a1, Address a2) {
+            if (a1.network == a2.network && a1.subnet == a2.subnet && a1.host == a2.host) return true;
+            else return false;
+        }
+
+        public static bool operator !=(Address a1, Address a2) {
+            return !(a1 == a2);
         }
     }
 }
