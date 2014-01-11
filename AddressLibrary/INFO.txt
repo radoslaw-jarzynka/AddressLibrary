@@ -40,7 +40,7 @@ logowanie
 
 pobranie listy podłączonych adresów (NA ŻĄDANIE RC)
 	RC -> LRM : REQ_TOPOLOGY
-	LRM -> RC : addr1 addr2 addr3... 
+	LRM -> RC : TOPOLOGY addr1 addr2 addr3... 
 		wysyłanie w jednej linii adresów wszystkich sąsiadów, na podstawie tej wiadomości RC tworzy graf sieci
 
 pytanie o wolne zasoby
@@ -55,5 +55,5 @@ komunikacja CC - RC
 pytanie o ścieżkę
 	CC -> RC : REQ_ROUTE addr1 addr2
 	RC oblicza ścieżkę, pyta się LRM po drodze czy jest dostępna, jeśli tak to ok jeśli nie to oblicza inną
-	RC -> CC addr1 addrPosredni1 addrPosredni2 addrPosredni3 addr2
+	RC -> CC ROUTE addr1 addrPosredni1 addrPosredni2 addrPosredni3 addr2
 
