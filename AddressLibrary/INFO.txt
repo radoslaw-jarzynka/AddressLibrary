@@ -50,6 +50,8 @@ pytanie o wolne zasoby
 	LRM -> RC : czyWolne ? YES : NO
 	RC zmienia lub nie graf sieci
 
+komunikacja CC - RC
+
 pytanie o ścieżkę
 	CC -> RC : REQ_ROUTE addr1 addr2
 	RC oblicza ścieżkę, pyta się LRM po drodze czy jest dostępna, jeśli tak to ok jeśli nie to oblicza inną
