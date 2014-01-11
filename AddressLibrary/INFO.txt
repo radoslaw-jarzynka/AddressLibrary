@@ -35,7 +35,7 @@ komunikacja LRM - RC
 
 logowanie
 	LRM -> RC : HELLO mojAdres
-	RC -> LRM : jestJużTakiAdresWSieci ? ERROR : OK 
+	RC -> LRM : jestJużTakiAdresWSieci ? ADDR_TAKEN : OK 
 		chyba rozumiecie o co tu chodzi xd
 
 pobranie listy podłączonych adresów (NA ŻĄDANIE RC)
