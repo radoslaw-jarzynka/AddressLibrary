@@ -2,9 +2,9 @@
 
 nazwy:
 	LRM - Link Resource Manager
-	RC - Routing Controller			jego adres to zawsze numerSieci.numerPodsieci.0
+	RC - Routing Controller			jego adres to zawsze numerSieci.numerPodsieci.0 //Routix?
 	CC - Connection Controller		jego adres to zawsze numerSieci.numerPodsieci.1
-	NCC - Network Call Controller
+	NCC - Network Call Controller		//dla tego rodzynka można dać numersieci = 0 na przykład, wtedy chmura też ogarnie
 	POL - Policy
 	DIR - Directory
 
@@ -27,8 +27,10 @@ zakładając jedną sieć i kilka podsieci adresy wyglądałyby w stylu 1.5.7 it
 RC i CC wiedziałyby której podsieci odpowiadają
 
 komunikacja między LRM:
+//chmury kablowej nie ruszamy, czyli trzeba użyć tej samej klasy serializowanej tylko vp,vc dać zerowe i w payload 
+//dać wiadomość w formacie np. <nazwa wysyłającego/jego adres> <nr portu wyjściowego> , musi być info o porcie!!!
 
-poprzez chmurę kablową wysyłanie wiadomości na VPI=0 VCI = 0 o treści "mojAdres"
+poprzez chmurę kablową wysyłanie wiadomości na VPI=0 VCI = 0 o treści "mojAdres" //patrz wyżej, nie sam adres
 po np 5 sekundach LRM zakłada że zna wszystkich sąsiadów. Wie którzy z nich są w innych podsieciach (na podstawie adresów)
 
 komunikacja LRM - RC
@@ -42,6 +44,7 @@ pobranie listy podłączonych adresów (NA ŻĄDANIE RC)
 	RC -> LRM : REQ_TOPOLOGY
 	LRM -> RC : TOPOLOGY addr1 addr2 addr3... 
 		wysyłanie w jednej linii adresów wszystkich sąsiadów, na podstawie tej wiadomości RC tworzy graf sieci
+//przesyłamy tu także info nie tylko o dostępnych sąsiadach za pomocą łączą, ale też VP?
 
 pytanie o wolne zasoby
 	RC -> LRM : IS_LINK_AVAILIBLE SNP
