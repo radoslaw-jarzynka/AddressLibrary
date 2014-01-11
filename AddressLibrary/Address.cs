@@ -8,10 +8,12 @@ namespace AddressLibrary
 {
     public class Address
     {
+        public int network { get; private set; }
         public int subnet {get; private set; }
         public int host {get; private set; }
 
-        public Address(int subnet, int host) {
+        public Address(int network, int subnet, int host) {
+            this.network = network;
             this.subnet = subnet;
             this.host = host;
         }
