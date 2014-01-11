@@ -19,7 +19,7 @@ namespace AddressLibrary
         }
 
         public String toString() {
-            return subnet + "." + host;
+            return network + "." + subnet + "." + host;
         }
     }
 }
