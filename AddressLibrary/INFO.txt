@@ -61,4 +61,6 @@ pytanie o ścieżkę
 	RC oblicza ścieżkę, pyta się LRM po drodze czy jest dostępna, jeśli tak to ok jeśli nie to oblicza inną
 	RC -> CC ROUTE addr1 addrPosredni1 addrPosredni2 addrPosredni3 addr2
 	LRM -> CC : HELLO mójAdres
-	CC -> CC ??
+	CC -> LRM : ADD PORT VPI VCI PORT VPI VCI
+	CC -> LRM : DEL PORT VPI VCI PORT VPI VCI
+	CC -> CC: ??
