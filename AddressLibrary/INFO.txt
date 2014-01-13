@@ -63,4 +63,8 @@ pytanie o ścieżkę
 	LRM -> CC : HELLO mójAdres
 	CC -> LRM : ADD PORT VPI VCI PORT VPI VCI
 	CC -> LRM : DEL PORT VPI VCI PORT VPI VCI
-	CC -> CC: ??
+	CC -> CC : [Propozycja] ROUTE zdejmowany od początkowego elementu do końcowego.
+	Np. RC zwraca ROUTE subnet1(addr1 addrPosredni1) subnet2(addrPosredni2) subnet3(addrPosredni3 addr2)
+	CC1 patrzy na ROUTE i na początku jest jego podsieć więc wysyła do NODE addr1 i NODE addrPosredni1 mappingi)
+	CC1 patrzy że następne polecenie jest dla subnet2 czyli CC2 ciśnie mu przez chmurę odessane ROUTE o obsluzone adresy
+	CC2 otrzymuje subnet2(addrPosredni2) subnet3(addrPosredni3 addr2) itp itd...
