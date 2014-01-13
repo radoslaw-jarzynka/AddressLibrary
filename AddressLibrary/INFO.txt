@@ -60,4 +60,5 @@ pytanie o ścieżkę
 	CC -> RC : REQ_ROUTE addr1 addr2
 	RC oblicza ścieżkę, pyta się LRM po drodze czy jest dostępna, jeśli tak to ok jeśli nie to oblicza inną
 	RC -> CC ROUTE addr1 addrPosredni1 addrPosredni2 addrPosredni3 addr2
-
+	LRM -> CC : HELLO mójAdres
+	CC -> CC ??
