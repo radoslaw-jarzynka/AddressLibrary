@@ -20,7 +20,7 @@ logowanie do chmury:
 
 	CLIENT - CLOUD : HELLO myAddress
 
-komunikacja przez chmurę:
+komunikacja przez chmurę: //zrobiłem już klasę do tego SPacket
 
 	CLOUD - CLIENT : "SENDER:MESSAGE"
 	będzie można zrobić w odbieraniu split Stringa względem pierwszego dwukropka i otrzymujemy nadawcę i wiadomość
@@ -35,16 +35,16 @@ zakładając jedną sieć i kilka podsieci adresy wyglądałyby w stylu 1.5.7 it
 RC i CC wiedziałyby której podsieci odpowiadają
 
 komunikacja między LRM:
-//chmury kablowej nie ruszamy, czyli trzeba użyć tej samej klasy serializowanej tylko vp,vc dać zerowe i w payload 
+//chmury kablowej nie ruszamy, czyli trzeba użyć tej samej klasy serializowanej tylko vp,vc dać -1 i w payload 
 //dać wiadomość w formacie np. <nazwa wysyłającego/jego adres> <nr portu wyjściowego> , musi być info o porcie!!!
 
-poprzez chmurę kablową wysyłanie wiadomości na VPI=0 VCI = 0 o treści "mojAdres" //patrz wyżej, nie sam adres
+poprzez chmurę kablową wysyłanie wiadomości na VPI=0 VCI = 0 -1 treści "mojAdres" //patrz wyżej, nie sam adres
 po np 5 sekundach LRM zakłada że zna wszystkich sąsiadów. Wie którzy z nich są w innych podsieciach (na podstawie adresów)
 
 komunikacja LRM - RC
 
 logowanie
-	LRM -> RC : HELLO mojAdres
+	LRM -> RC : HELLO mojAdres //skąd brać te adresy? z konfiga wczytamy?
 	RC -> LRM : jestJużTakiAdresWSieci ? ADDR_TAKEN : OK 
 		chyba rozumiecie o co tu chodzi xd
 
@@ -66,13 +66,21 @@ komunikacja CC - RC
 
 pytanie o ścieżkę
 	CC -> RC : REQ_ROUTE addr1 addr2
-	RC oblicza ścieżkę, pyta się LRM po drodze czy jest dostępna, jeśli tak to ok jeśli nie to oblicza inną
+	RC oblicza ścieżkę, pyta się LRM(ja bym pytał przed) po drodze czy jest dostępna, jeśli tak to ok jeśli nie to oblicza inną
 	RC -> CC ROUTE addr1 addrPosredni1 addrPosredni2 addrPosredni3 addr2
 	LRM -> CC : HELLO mójAdres
-	CC -> LRM : ADD PORT VPI VCI PORT VPI VCI
+	CC -> LRM : ADD PORT VPI VCI PORT VPI VCI // ja bym zajmował zarówno w weźle startowym i końcowym zasoby, identyfikowanie po vpi vci port
 	CC -> LRM : DEL PORT VPI VCI PORT VPI VCI
 	CC -> CC : [Propozycja] ROUTE zdejmowany od początkowego elementu do końcowego.
 	Np. RC zwraca ROUTE subnet1(addr1 addrPosredni1) subnet2(addrPosredni2) subnet3(addrPosredni3 addr2)
 	CC1 patrzy na ROUTE i na początku jest jego podsieć więc wysyła do NODE addr1 i NODE addrPosredni1 mappingi)
 	CC1 patrzy że następne polecenie jest dla subnet2 czyli CC2 ciśnie mu przez chmurę odessane ROUTE o obsluzone adresy
 	CC2 otrzymuje subnet2(addrPosredni2) subnet3(addrPosredni3 addr2) itp itd...
+	
+	Co do LRM:
+	-trzeba ustalić sposób w jakim każdy LRM ma przechowywać info o zajtości łącza i jego max przepustowości (ogarnąć też te VP?)
+	-musisz mi Radku jakoś udostępnić listę wszystkich interfejsów, abym mógł wszystkich zaspamować dookoła
+	-porponuje rozsyłanie wiadomosci o połączeniach między węzłami/klientami w postaci adres1 port1 adres 2 port 2
+	gdzie z nr 1 jest startowy jakby (te z 2 będą dotyczyły tego, który wysyła całą ścieżkę do RC)
+	- Radek udostepnij mi metodę żebym móg jakoś wypisywać z LRMa jakieś logi, komandos z chęcią zobaczy działanie LRMa
+	
