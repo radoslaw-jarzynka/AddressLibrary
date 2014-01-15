@@ -1,3 +1,11 @@
+﻿ACHTUNG: dwukierunkwość chciał komando (inna ścieżka od Mietka do Zenka i z powrotem może być), 
+﻿chciał też wielu połączeń między użytkownikami
+﻿
+﻿warto skopiować pomysł od niektórych grup z podglądam tablicy mapowań w węzłach - albo z Nodixa, albo Managerix odpytuje
+﻿przez Agentixa i drukuje do loga
+﻿
+﻿
+﻿
 ﻿PROTOKÓŁ KOMUNIKACJI
 
 nazwy:
