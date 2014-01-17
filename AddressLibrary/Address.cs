@@ -88,4 +88,17 @@ namespace AddressLibrary
             return !(a1 == a2);
         }
     }
+
+    public class AddressComparer : IEqualityComparer<Address> {
+
+        public bool Equals(Address addr1, Address addr2) {
+            if (addr1.network == addr2.network && addr1.subnet == addr2.subnet && addr1.host == addr2.host) return true;
+            else return false;
+        }
+
+        public int GetHashCode(Address addr) {
+            return addr.network.GetHashCode() + addr.subnet.GetHashCode() + addr.host.GetHashCode();
+        }
+
+    }
 }
