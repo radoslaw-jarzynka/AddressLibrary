@@ -18,14 +18,11 @@ nazwy:
 
 logowanie do chmury:
 
-	CLIENT - CLOUD : HELLO myAddress w postaci SPacket(myAddr, "cloud", "HELLO") <- jak chmura zobaczy że adres destination to "cloud" to wie że to o nią chodzi
+	CLIENT - CLOUD : SPacket(myAddr, "cloud", "HELLO") <- jak chmura zobaczy że adres destination to "cloud" to wie że to o nią chodzi
 
 komunikacja przez chmurę: //zrobiłem już klasę do tego SPacket
 
-	CLOUD - CLIENT : "SENDER:MESSAGE"
-	będzie można zrobić w odbieraniu split Stringa względem pierwszego dwukropka i otrzymujemy nadawcę i wiadomość
-	CLIENT - CLOUD : "DESTINATION:MESSAGE"
-	analogicznie, chmura otrzymuje cel i treść wiadomości
+	SPacket (string sender, string destination, List<string> argumenty)
 
 przestrzeń adresowa:
 
@@ -40,6 +37,15 @@ komunikacja między LRM:
 
 poprzez chmurę kablową wysyłanie wiadomości na VPI=0 VCI = 0 -1 treści "mojAdres" //patrz wyżej, nie sam adres
 po np 5 sekundach LRM zakłada że zna wszystkich sąsiadów. Wie którzy z nich są w innych podsieciach (na podstawie adresów)
+	z tym timerem 5 sekund to czuję że zabawa będzie
+
+komunikacja RC - RC
+	po wciśnięciu przycisku "ustal topologię" w Routixie wysyła on do wszystkich sąsiednich podsieci informację o pozostałych osiągalnych podsieciach, po czym ustala zmięnną bool na 5 sekund i nie wysyła więcej informacji przez ten czas
+	RC1 -> RC2 : TOPOLOGY 2 3 4
+		 w skrócie - RC podsieci 2 dowie się, że przez podsieć 1 jest w stanie dotrzeć do podsieci 3 i 4 (to 2 zignoruje bo będzie dotyczyć niego samego, wygodniej mi to będzie zaimplementować)
+	żeby nie klikać tego przycisku we wszystkich RC każdy po otrzymaniu takiej wiadomości rozsyła otrzyma informację do wszystkich sąsiadów
+	DLATEGO jest ten blok na 5 sekund bo by sie zasrały tymi wiadomościami w nieskończonej pętli. Można bezpiecznie założyć że przez 5 sekund wszystkie zdążą wszystko wysłać
+	RC wie z jakimi podsieciami graniczy dzięki localTopology pobranej od poszczególnych LRM
 
 komunikacja LRM - RC
 
@@ -79,8 +85,17 @@ pytanie o ścieżkę
 	
 	Co do LRM:
 	-trzeba ustalić sposób w jakim każdy LRM ma przechowywać info o zajtości łącza i jego max przepustowości (ogarnąć też te VP?)
+		patrz niżej - w tym pliku do każdego łącza można dać też przepustowość łąćza
+
 	-musisz mi Radku jakoś udostępnić listę wszystkich interfejsów, abym mógł wszystkich zaspamować dookoła
+		myślę że tutaj trzeba będzie to zrobić jako plik wczytywany podczas startu węzła. po zalogowaniu się do chmury sterowania poinformuje ją o swoich interfejsach. Taka propozycja moja
+
+
 	-porponuje rozsyłanie wiadomosci o połączeniach między węzłami/klientami w postaci adres1 port1 adres 2 port 2
 	gdzie z nr 1 jest startowy jakby (te z 2 będą dotyczyły tego, który wysyła całą ścieżkę do RC)
+		jakich wiadomości o połączeniach między węzłami? sprecyzuj bo nie ogarniam xD
+
+
 	- Radek udostepnij mi metodę żebym móg jakoś wypisywać z LRMa jakieś logi, komandos z chęcią zobaczy działanie LRMa
+		SetText(String text) była, jest i będzie
 	
