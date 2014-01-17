@@ -18,7 +18,7 @@ nazwy:
 
 logowanie do chmury:
 
-	CLIENT - CLOUD : HELLO myAddress
+	CLIENT - CLOUD : HELLO myAddress w postaci SPacket(myAddr, "cloud", "HELLO") <- jak chmura zobaczy że adres destination to "cloud" to wie że to o nią chodzi
 
 komunikacja przez chmurę: //zrobiłem już klasę do tego SPacket
 
