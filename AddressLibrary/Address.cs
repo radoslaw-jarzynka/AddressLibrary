@@ -83,18 +83,21 @@ namespace AddressLibrary
             else return false;
         }
 
-        public static bool operator ==(Address a1, Address a2) {
+       /* public static bool operator ==(Address a1, Address a2) {
+            if (a2 == null) return false;
+            if (a1 == null) return false;
             if (a1.network == a2.network && a1.subnet == a2.subnet && a1.host == a2.host) return true;
             else return false;
-        }
+        }*/
 
         public override int GetHashCode() {
             return base.GetHashCode();
         }
 
-        public static bool operator !=(Address a1, Address a2) {
-            return !(a1 == a2);
-        }
+        /*public static bool operator !=(Address a1, Address a2) {
+            if (a2 == null || a1 == null) return true;
+            else return !(a1 == a2);
+        }*/
     }
 
     public class AddressComparer : IEqualityComparer<Address> {
