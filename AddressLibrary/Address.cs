@@ -8,9 +8,9 @@ namespace AddressLibrary
 {
     public class Address
     {
-        public int network { get; private set; }
-        public int subnet {get; private set; }
-        public int host {get; private set; }
+        public int network { get; set; }
+        public int subnet {get; set; }
+        public int host {get; set; }
         /// <summary>
         /// konstruktor
         /// </summary>
@@ -21,6 +21,14 @@ namespace AddressLibrary
             this.network = network;
             this.subnet = subnet;
             this.host = host;
+        }
+        /// <summary>
+        /// konstruktor bezargumentowy - nadaje wszystkim wartosciom -1
+        /// </summary>
+        public Address() {
+            this.network = -1;
+            this.subnet = -1;
+            this.host = -1;
         }
         /// <summary>
         /// zwraca adres w postaci string
