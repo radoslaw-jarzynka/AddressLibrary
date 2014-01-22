@@ -99,3 +99,33 @@ pytanie o ścieżkę
 	- Radek udostepnij mi metodę żebym móg jakoś wypisywać z LRMa jakieś logi, komandos z chęcią zobaczy działanie LRMa
 		SetText(String text) była, jest i będzie
 	
+	komunikacja PD-Client:
+	C: client
+PD: Policy-Directory
+
+NA STYKU C - PD wysyłamy SPacket
+
+PolicyDirectory ma adres 0.0.2
+
+wybór nazwy klienta:
+C -> PD : LOGIN Zenek 1.2.4(adres Zenka)
+PD -> C : OK lub NAME_TAKEN gdy nazwa jest już zajęta
+
+pobranie klientów z sieci:
+
+C-> PD : REQ_CLIENTS
+PD -> C : CLIENTS Zenek Mietek Gówniak
+
+chęć nawiązania połączenia Mietka z Zenkiem (Mietek gada)
+
+C -> PD : REQ_CONN Zenek przepustowość
+PD sprawdza czy Mietek może nawiązać połączenie o danej przepustowości
+PD -> C : YES adresZenka lub NO 
+NCC : po szynie chmury kontrolnej komunikacja leci dalej
+
+
+	pliki konfigracyjne Nodixa i Clientixa:
+
+	jeśli chodzi o dodawanie vpivci i klientów itp. to zostaje tak jak było, jest dodana linijka
+	ADD_ROUTE port adresdocelowy przepustowoscWMbit/s, np 
+	ADD_ROUTE 1 1.4.2 6
