@@ -10,6 +10,7 @@ namespace AddressLibrary
     {
         public int network { get; set; }
         public int subnet {get; set; }
+
         public int host {get; set; }
         /// <summary>
         /// konstruktor

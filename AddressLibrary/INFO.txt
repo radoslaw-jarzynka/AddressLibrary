@@ -129,3 +129,21 @@ NCC : po szynie chmury kontrolnej komunikacja leci dalej
 	jeśli chodzi o dodawanie vpivci i klientów itp. to zostaje tak jak było, jest dodana linijka
 	ADD_ROUTE port adresdocelowy przepustowoscWMbit/s, np 
 	ADD_ROUTE 1 1.4.2 6
+
+--- Teoria chumr -------------------------------------------------------------------------------
+
+TC - Chmura transporowa
+	znana kiedyś jako: chmura kablowa (Cloudix)
+	transportuje pakiety z payloadem zserialozowane Packet.ATMPacket
+	potrafi wysterowywać na odpowiednie paczki na adresy (AdressLibrary.Address) i nowymi numerami portów
+	sprawdza i loguje kto co i jak (utraciła możliwość rozpoznawania Klient/Węzeł)
+	nie potrafi analizować nagłówka ATM
+	ma kolor niebieski
+	
+SC - Chumra sterująca
+	znaja kiedyś jako: ControlCloudix 
+	transportuje pakiety z warstwy sterowania siecią Packet.SPacket 
+	potrafi wysterowywać na odpowiednie paczki na adresy (AdressLibrary.Address)
+	ma kolor zielony
+
+-------------------------------------------------------------------------------------------------
