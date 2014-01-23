@@ -136,13 +136,15 @@ TC - Chmura transporowa
 	znana kiedyś jako: chmura kablowa (Cloudix)
 	transportuje pakiety z payloadem zserialozowane Packet.ATMPacket
 	potrafi wysterowywać na odpowiednie paczki na adresy (AdressLibrary.Address) i nowymi numerami portów
-	sprawdza i loguje kto co i jak (utraciła możliwość rozpoznawania Klient/Węzeł)
+	- pierwszy pakiet typu Client Mietek 1.8.2 (czysty string)
+	- następne pakiety to Packet.ATMPacket
+	sprawdza i loguje kto co i jak (nie utraciła możliwości rozpoznawania Klient/Węzeł)
 	nie potrafi analizować nagłówka ATM
 	ma kolor niebieski
 	
 SC - Chumra sterująca
 	znaja kiedyś jako: ControlCloudix 
-	transportuje pakiety z warstwy sterowania siecią Packet.SPacket 
+	- transportuje zserialozowane pakiety z warstwy sterowania siecią Packet.SPacket 
 	potrafi wysterowywać na odpowiednie paczki na adresy (AdressLibrary.Address)
 	ma kolor zielony
 
