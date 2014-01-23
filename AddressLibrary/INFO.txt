@@ -187,3 +187,11 @@ pytanie o wolne zasoby !!!! to jak rozwiązać?
 	
 	- info o płączach Radek zrobił, pytanie czy rozdzielamy jedno łacze na kilka o różnych VP?
 	- LRM loguje swoje ustalenia do Nodixa
+
+	TODO:
+	- rozsyłanie metodą Spamuj wszytskich sąsiadów z listy
+	- obsługa ATMPacket spamującego - zebranie info o sąsiadach, po zebraniu info od sąsiadów (pytanie ile czekać?! mogę automatycznie nie wysyłać do RC, tylko czekać na żądanie,
+	 wtedy wyślę to co zebrałem) 
+	 - wysyłka topologii na żądanie RC
+	 - ogarnięcie czytania i wysyłania pakietów z/do SC
+	 - zarządzenie zasobami
