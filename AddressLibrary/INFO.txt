@@ -147,3 +147,43 @@ SC - Chumra sterująca
 	ma kolor zielony
 
 -------------------------------------------------------------------------------------------------
+__________________________________________________________________________________________________
+
+
+Podsumowanie LRM w jednym miejscu, żebym wiedział co robić i o czym nie zapomnieć
+- komunikacja między LRM:
+starą chmurą wysyłam stare pakiety z vp,vc = -1 i w payload wiadomość w formacie np. SPAM 1.2.3 1 (co oznacza mój adres to 1.2.3 wysyłam na port 1)
+- nodix wykrywa dziwny pakiet i przekazuje go do lrm, lrm odczytuje wiadomość z payload i LRM stwierdza, że dostał to na swój port 2, jego adres to 4.5.6
+z tego wykminia że ścieżka to 1.2.3 1 2 4.5.6 (adres1, port1, port2, adres2 czy inna kolejnosć)
+- postępowanie ze scieżką w odpowiednim punkcie
+- rozsyłanie po wywołaniu metody Spamuj() (do użycia w momencie jak cała sieć wstanie, Radek musi ją wywołać guzikiem czy jakoś), potem wywoływana na prośbę RC: komendą np. SPAMUJ
+- ponoiwne spamowanie po prośbie RC, spowodowanej trapem z SC
+
+logowanie
+	LRM -> RC : HELLO mojAdres //skąd brać te adresy? z konfiga wczytamy? !!!nadal nie wiem, dać adres tożsamy z nodixem?
+	RC -> LRM : jestJużTakiAdresWSieci ? ADDR_TAKEN : OK 
+
+
+pobranie listy podłączonych adresów (NA ŻĄDANIE RC) - wysyłanie topologii z bufora, który trzyma osttanio zebraną topologię
+	RC -> LRM : REQ_TOPOLOGY
+	LRM -> RC : TOPOLOGY addr1 addr2 addr3... 
+		wysyłanie w jednej linii adresów wszystkich sąsiadów, na podstawie tej wiadomości RC tworzy graf sieci
+przesyłamy tu także info nie tylko o dostępnych sąsiadach za pomocą łączą, ale też VP? nadal nie mam odp!!!
+
+pytanie o wolne zasoby !!!! to jak rozwiązać?
+	RC -> LRM : IS_LINK_AVAILIBLE SNP
+		tutaj jest pytanie o to SNP, jak dokładnie zostanie ono opisane to zrobimy w przyszłości
+		może to być pytanie o łącze między klientami albo o VPI, nie wiem
+	LRM -> RC : czyWolne ? YES ADDR_DOCELOWY : NO ADDR_DOCELOWY 
+	LRM musi odpowiadać o którym łączu mówi!
+	RC zmienia lub nie graf sieci
+
+
+	CC -> LRM : ADD PORT VPI VCI PORT VPI VCI // wysyłane do obu nodixów na krańcach łącza
+	CC -> LRM : DEL PORT VPI VCI PORT VPI VCI
+
+	w odp odsyłam ADDED albo DELETED albo ERROR DELETE albo ERROR ADD
+
+	
+	- info o płączach Radek zrobił, pytanie czy rozdzielamy jedno łacze na kilka o różnych VP?
+	- LRM loguje swoje ustalenia do Nodixa
