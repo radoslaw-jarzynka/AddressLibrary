@@ -201,3 +201,4 @@ pytanie o wolne zasoby !!!! to jak rozwiązać?
 Komunikacja CC -> LRM i LRM -> CC
 
 LRM -> CC LOGIN _name _type (client/transport)
+CC -> LRM ADD_MAPPING inAddr inVp inVC outAddr outVP outVC
