@@ -195,3 +195,9 @@ pytanie o wolne zasoby !!!! to jak rozwiązać?
 	 - wysyłka topologii na żądanie RC
 	 - ogarnięcie czytania i wysyłania pakietów z/do SC
 	 - zarządzenie zasobami
+	 
+----------------------------------------------------------------
+----------------------------------------------------------------
+Komunikacja CC -> LRM i LRM -> CC
+
+LRM -> CC LOGIN _name _type (client/transport)
