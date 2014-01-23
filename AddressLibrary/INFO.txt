@@ -159,8 +159,13 @@ z tego wykminia że ścieżka to 1.2.3 1 2 4.5.6 (adres1, port1, port2, adres2 c
 - rozsyłanie po wywołaniu metody Spamuj() (do użycia w momencie jak cała sieć wstanie, Radek musi ją wywołać guzikiem czy jakoś), potem wywoływana na prośbę RC: komendą np. SPAMUJ
 - ponoiwne spamowanie po prośbie RC, spowodowanej trapem z SC
 
+
+					to powyżej jest opcjonalne, na razie wczytujemy config z pliku.
+					oczywiście potem możemy dodać rozkmine topologii sieci na bieżąco
+
 logowanie
 	LRM -> RC : HELLO mojAdres //skąd brać te adresy? z konfiga wczytamy? !!!nadal nie wiem, dać adres tożsamy z nodixem?
+									tak
 	RC -> LRM : jestJużTakiAdresWSieci ? ADDR_TAKEN : OK 
 
 
@@ -169,24 +174,36 @@ pobranie listy podłączonych adresów (NA ŻĄDANIE RC) - wysyłanie topologii 
 	LRM -> RC : TOPOLOGY addr1 addr2 addr3... 
 		wysyłanie w jednej linii adresów wszystkich sąsiadów, na podstawie tej wiadomości RC tworzy graf sieci
 przesyłamy tu także info nie tylko o dostępnych sąsiadach za pomocą łączą, ale też VP? nadal nie mam odp!!!
+									bo nadal nie wiem, na razie same adresy
 
 pytanie o wolne zasoby !!!! to jak rozwiązać?
 	RC -> LRM : IS_LINK_AVAILIBLE SNP
 		tutaj jest pytanie o to SNP, jak dokładnie zostanie ono opisane to zrobimy w przyszłości
 		może to być pytanie o łącze między klientami albo o VPI, nie wiem
+									na razie pytanie o całe łącze
 	LRM -> RC : czyWolne ? YES ADDR_DOCELOWY : NO ADDR_DOCELOWY 
 	LRM musi odpowiadać o którym łączu mówi!
 	RC zmienia lub nie graf sieci
 
+	i tutaj zabawa - jak LRM sprawdza czy łącze jest wolne?
+	po pierwsze - musi mieć w sobie słownik (na przykład) <adres sąsiada, aktualna wolna przepustowość>
+					jak ma wolna przepustowość to zmniejsza ją o 2Mbit/s (jeśli taka predkosc bazowa zakladamy)
+					i wysyła na port tego adresu pakiet ATM vpi=-1 vci=-1 payload="isAlive"
 
-	CC -> LRM : ADD PORT VPI VCI PORT VPI VCI // wysyłane do obu nodixów na krańcach łącza
+					gdy węzeł po drugiej stronie odbierze taki pakiet wysyła go z powrotem z payloadem "yes"
+					gdy węzeł pierwszy odbierze z powrotem pakiet z payloadem "yes" zakłada że łącze jest wolne i odsyła info do RC
+					gdy minie timer (załóżmy że 3 sekundy) bez odpowiedzi wysyła że łącze jest złe
+
+
 	CC -> LRM : DEL PORT VPI VCI PORT VPI VCI
 
 	w odp odsyłam ADDED albo DELETED albo ERROR DELETE albo ERROR ADD
 
 	
-	- info o płączach Radek zrobił, pytanie czy rozdzielamy jedno łacze na kilka o różnych VP?
+	- info o łączach Radek zrobił, pytanie czy rozdzielamy jedno łacze na kilka o różnych VP?
 	- LRM loguje swoje ustalenia do Nodixa
+							jak pisałem - jest, była i będzie metoda publiczna SetText, tylko ją wywołać trzeba
+
 
 	TODO:
 	- rozsyłanie metodą Spamuj wszytskich sąsiadów z listy
@@ -195,6 +212,8 @@ pytanie o wolne zasoby !!!! to jak rozwiązać?
 	 - wysyłka topologii na żądanie RC
 	 - ogarnięcie czytania i wysyłania pakietów z/do SC
 	 - zarządzenie zasobami
+	 - timer
+	 - analiza payload pakietu i albo odsyłanie go albo ustalenie że łącze działa
 	 
 ----------------------------------------------------------------
 ----------------------------------------------------------------
