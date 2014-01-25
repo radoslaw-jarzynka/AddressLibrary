@@ -74,14 +74,10 @@ pytanie o ścieżkę
 	CC -> RC : REQ_ROUTE addr1 addr2
 	RC oblicza ścieżkę, pyta się LRM(ja bym pytał przed) po drodze czy jest dostępna, jeśli tak to ok jeśli nie to oblicza inną
 	RC -> CC ROUTE addr1 addrPosredni1 addrPosredni2 addrPosredni3 addr2
-	LRM -> CC : HELLO mójAdres
-	CC -> LRM : ADD PORT VPI VCI PORT VPI VCI // ja bym zajmował zarówno w weźle startowym i końcowym zasoby, identyfikowanie po vpi vci port
-	CC -> LRM : DEL PORT VPI VCI PORT VPI VCI
-	CC -> CC : [Propozycja] ROUTE zdejmowany od początkowego elementu do końcowego.
-	Np. RC zwraca ROUTE subnet1(addr1 addrPosredni1) subnet2(addrPosredni2) subnet3(addrPosredni3 addr2)
-	CC1 patrzy na ROUTE i na początku jest jego podsieć więc wysyła do NODE addr1 i NODE addrPosredni1 mappingi)
-	CC1 patrzy że następne polecenie jest dla subnet2 czyli CC2 ciśnie mu przez chmurę odessane ROUTE o obsluzone adresy
-	CC2 otrzymuje subnet2(addrPosredni2) subnet3(addrPosredni3 addr2) itp itd...
+	LRM -> CC : HELLO mojaNazwa
+	CC -> LRM : ADD_MAPPING PORT VPI VCI PORT VPI VCI // ja bym zajmował zarówno w weźle startowym i końcowym zasoby, identyfikowanie po vpi vci port
+	CC -> LRM : DEL_MAPPING PORT VPI VCI PORT VPI VCI
+	CC -> CC : REQ_CONN connId lastSubAddr currSubAddr vpi vci finalDestAddr
 	
 	Co do LRM:
 	-trzeba ustalić sposób w jakim każdy LRM ma przechowywać info o zajtości łącza i jego max przepustowości (ogarnąć też te VP?)
@@ -221,5 +217,20 @@ pytanie o wolne zasoby !!!! to jak rozwiązać?
 ----------------------------------------------------------------
 Komunikacja CC -> LRM i LRM -> CC
 
-LRM -> CC LOGIN _name _type (client/transport)
-CC -> LRM ADD_MAPPING inAddr inVp inVC outAddr outVP outVC
+LRM -> CC HELLO myName
+CC -> LRM ADD_MAPPING inAddr inVp inVC outAddr outVP outVC do NODIX
+CC -> LRM ADD_MAPPING addr vp vc idConn
+
+przykład:
+CC -> NODIXA 1.1.3 pomiedzy 1.1.2 i 1.1.4
+ADD_MAPPING 1.1.2 1 1 1.1.4 1 1
+
+CC -> CLIENTX do którego dzwonimy a ostatni NODIX to 1.1.3 a numer połączenia to 
+ADD_MAPPING 1.1.3 1 1 88
+
+DEL_MAPPINGI mają taki sam format.
+
+----------------------------------
+----------------------------------
+NCC -> CC REQ_CONN idConn srcAddr destAddr
+NCC -> CC REQ_DISCONN idConn
