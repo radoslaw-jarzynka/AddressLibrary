@@ -232,5 +232,5 @@ DEL_MAPPINGI mają taki sam format.
 
 ----------------------------------
 ----------------------------------
-NCC -> CC REQ_CONN idConn srcAddr destAddr
-NCC -> CC REQ_DISCONN idConn
+NCC -> CC Spacket(srcAddr, destAddr, "REQ_CONN idConn") 
+NCC -> CC Spacket(srcAddr, destAddr, "REQ_DISCONN idConn")
