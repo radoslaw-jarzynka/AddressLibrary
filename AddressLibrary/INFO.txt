@@ -74,6 +74,7 @@ pytanie o ścieżkę
 	CC -> RC : REQ_ROUTE addr1 addr2
 	RC oblicza ścieżkę, pyta się LRM(ja bym pytał przed) po drodze czy jest dostępna, jeśli tak to ok jeśli nie to oblicza inną
 	RC -> CC ROUTE addr1 addrPosredni1 addrPosredni2 addrPosredni3 addr2
+				gdy nie ma ścieżki RC->CC NO_ROUTE
 	LRM -> CC : HELLO mojaNazwa
 	CC -> LRM : ADD_MAPPING PORT VPI VCI PORT VPI VCI // ja bym zajmował zarówno w weźle startowym i końcowym zasoby, identyfikowanie po vpi vci port
 	CC -> LRM : DEL_MAPPING PORT VPI VCI PORT VPI VCI
