@@ -266,8 +266,17 @@ zamknięcie X węzła:
 
 -----------------------------------------------------------------
 
+
+ChmuraS gdy wyłapie wyjątek gniazdka (zerwanie połaczenia z Nodixem lub Clientixem) to rozsyła do wszystkich podłączonych do siebie LRMów wiadomosć np. DEAD 1.2.3
+Następnie każdy LRM sprawdza, czy podany adres 1.2.3 dotyczy jego sąsiada, jeśli tak powiadamia swoje CC i RC wiadomoscią DEAD 1.2.3, jeśli nie nic nie wysyła
+
 SC w przypadku jak umrze węzeł:
 1. SC ->> (do wszytkich) Node (w sensie LRM, bo z tym ma SC połaczenie w Nodach) DEAD 1.2.3
+LRM gdy to był jego sąsiad
+LRM ->> CC: DEAD 1.2.3
+LRM ->> RC: DEAD 1.2.3
+LRM gdy to nie jego sąsiad padł
+LRM ->> mam urlop :P
 
 ----------------------------------------------------------------
 
