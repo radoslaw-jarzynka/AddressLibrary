@@ -263,7 +263,13 @@ zamknięcie X węzła:
 12. NCC -> ClientA:	CONN_LOST 77
 13. NCC -> ClientB:	CONN_LOST 77
 
+
 -----------------------------------------------------------------
+
+SC w przypadku jak umrze węzeł:
+1. SC ->> (do wszytkich) Node (w sensie LRM, bo z tym ma SC połaczenie w Nodach) DEAD 1.2.3
+
+----------------------------------------------------------------
 
 ++ Można ściemnić że węzeł kliencki jest oddzielnie podłaczony do Node'a
 albo powiedzieć wprost że to u nas jest zespolone i chuj 	
