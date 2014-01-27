@@ -231,11 +231,59 @@ ADD_MAPPING 1.1.3 1 1 88
 
 DEL_MAPPINGI mają taki sam format.
 
-----------------------------------
-----------------------------------
-NCC -> CC Spacket(srcAddr, destAddr, "REQ_CONN idConn") 
-NCC -> CC Spacket(srcAddr, destAddr, "REQ_DISCONN idConn")
+-----------------------------------------------------------------
 
+Komunikacja przykładowa NCC:
+ClientA	- 1.1.3
+ClientB	- 1.2.4
+NCC		- 0.0.2
+CC(A)	- CC klienta A
+CC(B)	- CC klienta B
+
+zestawianie:
+1. ClientA -> NCC:	REQ_CALL 1.2.4
+2. NCC -> CC(A):	REQ_CONN 1.1.3 1.2.4 77	
+
+jak się uda:
+3. CC(B) -> NCC:	CONN_EST 77
+4. NCC -> ClientA:	CONN_EST 77
+
+jak się nie uda:
+5. CC -> NCC:		CONN_NOEST 77
+6. NCC -> ClientA:	CONN_NOEST 77
+
+rozłącznie:
+7. ClientA -> NCC:	REQ_DISCONN 77
+8. NCC -> CC(A):	REQ_DISCONN 77
+9. CC(B) -> NCC:	CONN_DISCONN 77
+10. NCC -> ClientA:	CONN_DISCONN 77
+
+zamknięcie X węzła:
+11. CC -> NCC:		CONN_LOST 77
+12. NCC -> ClientA:	CONN_LOST 77
+13. NCC -> ClientB:	CONN_LOST 77
+
+
+-----------------------------------------------------------------
+
+
+ChmuraS gdy wyłapie wyjątek gniazdka (zerwanie połaczenia z Nodixem lub Clientixem) to rozsyła do wszystkich podłączonych do siebie LRMów wiadomosć np. DEAD 1.2.3
+Następnie każdy LRM sprawdza, czy podany adres 1.2.3 dotyczy jego sąsiada, jeśli tak powiadamia swoje CC i RC wiadomoscią DEAD 1.2.3, jeśli nie nic nie wysyła
+
+SC w przypadku jak umrze węzeł:
+1. SC ->> (do wszytkich) Node (w sensie LRM, bo z tym ma SC połaczenie w Nodach) DEAD 1.2.3
+LRM gdy to był jego sąsiad
+LRM ->> CC: DEAD 1.2.3
+LRM ->> RC: DEAD 1.2.3
+LRM gdy to nie jego sąsiad padł
+LRM ->> mam urlop :P
+
+----------------------------------------------------------------
+
+++ Można ściemnić że węzeł kliencki jest oddzielnie podłaczony do Node'a
+albo powiedzieć wprost że to u nas jest zespolone i chuj 	
+
+------------------------------------------------------------------------
 
 FORMAT JAK SĄ ZAPISYWANE ŚCIEŻKI W CONFIGU LRMA
 port adresdocelowy przepustowość vpiPoSpacji
