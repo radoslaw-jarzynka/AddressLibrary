@@ -235,3 +235,12 @@ DEL_MAPPINGI mają taki sam format.
 ----------------------------------
 NCC -> CC Spacket(srcAddr, destAddr, "REQ_CONN idConn") 
 NCC -> CC Spacket(srcAddr, destAddr, "REQ_DISCONN idConn")
+
+
+FORMAT JAK SĄ ZAPISYWANE ŚCIEŻKI W CONFIGU LRMA
+port adresdocelowy przepustowość vpiPoSpacji
+NA PRZYKŁAD
+1 1.2.4 8 3 4 5
+to znaczy - na porcie 1 jest osiągalny adres 1.2.4, cało łącze ma przepustowość 8Mbit/s, działają na nim VPI 3, 4 i 5.
+
+VPI przechowywane są w klasie Route w obiekcie List<int> VPIList. Poza tym ta klasa jest bez zmian
