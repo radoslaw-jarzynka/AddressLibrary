@@ -41,9 +41,9 @@ po np 5 sekundach LRM zakłada że zna wszystkich sąsiadów. Wie którzy z nich
 
 komunikacja RC - RC
 	po wciśnięciu przycisku "ustal topologię" w Routixie wysyła on do wszystkich sąsiednich podsieci informację o pozostałych osiągalnych podsieciach, po czym ustala zmięnną bool na 5 sekund i nie wysyła więcej informacji przez ten czas
-	RC1 -> RC2 : TOPOLOGY 2 3 4
+	RC1 -> RC2 : TOPOLOGY 2 3 4 VIA mójnumerPodsieci
 		 w skrócie - RC podsieci 2 dowie się, że przez podsieć 1 jest w stanie dotrzeć do podsieci 3 i 4 (to 2 zignoruje bo będzie dotyczyć niego samego, wygodniej mi to będzie zaimplementować)
-	żeby nie klikać tego przycisku we wszystkich RC każdy po otrzymaniu takiej wiadomości rozsyła otrzyma informację do wszystkich sąsiadów
+	żeby nie klikać tego przycisku we wszystkich RC każdy po otrzymaniu takiej wiadomości rozsyła informację o sobie do wszystkich sąsiadów ORAZ przekazuje otrzymaną wiadomość (żeby pakiet rozesłany z jednej podsieci przeszedł przez całą sieć)
 	DLATEGO jest ten blok na 5 sekund bo by sie zasrały tymi wiadomościami w nieskończonej pętli. Można bezpiecznie założyć że przez 5 sekund wszystkie zdążą wszystko wysłać
 	RC wie z jakimi podsieciami graniczy dzięki localTopology pobranej od poszczególnych LRM
 
