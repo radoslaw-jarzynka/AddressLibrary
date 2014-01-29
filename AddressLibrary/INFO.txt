@@ -292,3 +292,15 @@ NA PRZYKŁAD
 to znaczy - na porcie 1 jest osiągalny adres 1.2.4, cało łącze ma przepustowość 8Mbit/s, działają na nim VPI 3, 4 i 5.
 
 VPI przechowywane są w klasie Route w obiekcie List<int> VPIList. Poza tym ta klasa jest bez zmian
+
+Zbieranie info o dostępnych VPI
+CC pyta LRM o dostępne u sąsiadów VPI
+
+CC >> LRM: REQ_VPATHS
+LRM >> CC: RES_VPATHS adres1#vp1#vp2#vp3 adres2#vp1#vp2 adres3#vp1 adres4#vp1#vp2#vp3#vp4#vp5
+
+Zbieranie info o dostępnych VPI
+CC pyta LRM o dostępne u sąsiadów VPI
+
+CC >> LRM: REQ_VPATHS
+LRM >> CC: RES_VPATHS adres1#vp1#vp2#vp3 adres2#vp1#vp2 adres3#vp1 adres4#vp1#vp2#vp3#vp4#vp5
