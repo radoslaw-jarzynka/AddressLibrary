@@ -276,10 +276,12 @@ LRM >> CC: RES_VPATHS adres1#vp1#vp2#vp3 adres2#vp1#vp2 adres3#vp1 adres4#vp1#vp
 
 NOWY PROTOKÓŁ INICJACYJNY:
 Codename: proni
-Client A (A, Mietek, 1.1.2) inicjuje
-Clinet B (B, Zenek,	 1.2.3) odbiera
+Client A inicjuje połączenie
+Clinet B odbiera
+tutaj klient A to Mietek - 1.1.2
+a klient B to Zenek - 1.2.3
 
-1. Client A loguje się do sieci do NCC
+1. Mietek loguje się do sieci do NCC
 	A -> NCC:		LOGIN 1.1.2 Mietek
 	NCC -> PD:		LOGIN 1.1.2 Mietek
 	+ PD -> NCC:	LOGGED 1.1.2 Mietek
@@ -287,10 +289,12 @@ Clinet B (B, Zenek,	 1.2.3) odbiera
 	- PD -> NCC		NAME_TAKEN 1.1.2 Mietek
 	  NCC -> A:		NAME_TAKEN
 
-2. Client A wysyła request że chce nazwy innych klientów
+2. Mietek wysyła request że chce nazwy innych klientów
 	A -> NCC:		REQ_CLIENTS
-	NCC -> PD:		REQ_CLIENTS
-	PD -> NCC:		CLIENTS Zenek k2 k3 k4
+	NCC -> PD:		REQ_CLIENTS 1.1.2
+
+2,5. PD odpowiada na zapytanie
+	PD -> NCC:		CLIENTS 1.1.2 Zenek k2 k3 k4
 	NCC -> A:		CLIENTS Zenek k2 k3 k4
 
 --- tu kończy się niezależna sekcja - bez następstw przyczynowo-skutkowych
