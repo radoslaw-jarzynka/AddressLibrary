@@ -302,7 +302,7 @@ NCC -> PD:		REQ_CALL 1.1.2 Zenek 6
   (PD odsyła że ok, zgadza się na takie połączenie przesyłając adres Zenka 1.2.3)
   NCC -> A:		OK Zenek 6 1.2.3 77
   (NCC odsyła że ok, mówi które połączenie (że Zenek i 6Mbps), daje adres docelowy, mówi jaki ma numerek połączenie)
-- PD -> NCC:	NO Zenek 6
+- PD -> NCC:	NO 1.1.2 Zenek 6
   NCC -> A:		NO Zenek 6
 
 4. Teraz NCC mówi co się dzieje CC (to oc było dawniej)
