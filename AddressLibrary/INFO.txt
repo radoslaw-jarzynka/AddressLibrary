@@ -233,39 +233,6 @@ DEL_MAPPINGI mają taki sam format.
 
 -----------------------------------------------------------------
 
-Komunikacja przykładowa NCC:
-ClientA	- 1.1.3
-ClientB	- 1.2.4
-NCC		- 0.0.2
-CC(A)	- CC klienta A
-CC(B)	- CC klienta B
-
-zestawianie:
-1. ClientA -> NCC:	REQ_CALL 1.2.4
-2. NCC -> CC(A):	REQ_CONN 1.1.3 1.2.4 77	
-
-jak się uda:
-3. CC(B) -> NCC:	CONN_EST 77
-4. NCC -> ClientA:	CONN_EST 77
-
-jak się nie uda:
-5. CC -> NCC:		CONN_NOEST 77
-6. NCC -> ClientA:	CONN_NOEST 77
-
-rozłącznie:
-7. ClientA -> NCC:	REQ_DISCONN 77
-8. NCC -> CC(A):	REQ_DISCONN 77
-9. CC(B) -> NCC:	CONN_DISCONN 77
-10. NCC -> ClientA:	CONN_DISCONN 77
-
-zamknięcie X węzła:
-11. CC -> NCC:		CONN_LOST 77
-12. NCC -> ClientA:	CONN_LOST 77
-13. NCC -> ClientB:	CONN_LOST 77
-
-
------------------------------------------------------------------
-
 
 ChmuraS gdy wyłapie wyjątek gniazdka (zerwanie połaczenia z Nodixem lub Clientixem) to rozsyła do wszystkich podłączonych do siebie LRMów wiadomosć np. DEAD 1.2.3
 Następnie każdy LRM sprawdza, czy podany adres 1.2.3 dotyczy jego sąsiada, jeśli tak powiadamia swoje CC i RC wiadomoscią DEAD 1.2.3, jeśli nie nic nie wysyła
@@ -304,3 +271,39 @@ CC pyta LRM o dostępne u sąsiadów VPI
 
 CC >> LRM: REQ_VPATHS
 LRM >> CC: RES_VPATHS adres1#vp1#vp2#vp3 adres2#vp1#vp2 adres3#vp1 adres4#vp1#vp2#vp3#vp4#vp5
+
+---------------------------------------------------------------------------
+
+NOWY PROTOKÓŁ INICJACYJNY:
+Codename: proni
+Client A (A, Mietek, 1.1.2) inicjuje
+Clinet B (B, Zenek,	 1.2.3) odbiera
+
+1. ClientA loguje się do sieci do NCC
+A -> NCC:		LOGIN 1.1.2 Mietek
+NCC -> PD:		LOGIN 1.1.2 Mietek
++ PD -> NCC:	LOGGED 1.1.2 Mietek
+  NCC -> A:		OK
+- PD -> NCC		NAME_TAKEN 1.1.2 Mietek
+  NCC -> A:		NAME_TAKEN
+
+2. ClientA wysyła request że chce nazwy innych klientów
+A -> NCC:		REQ_CLIENTS
+NCC -> PD:		REQ_CLIENTS
+PD- > NCC:		CLIENTS Zenek k2 k3 k4
+NCC -> A:		CLIENTS Zenek k2 k3 k4
+
+3. A (Mietek) wybiera B (Zenek) i prosi o połacznie z nim np 6Mbps
+Mietek -> NCC:	REQ_CALL Zenek 6
+(że chce do Zenka 6Mbps)
+NCC -> PD:		REQ_CALL 1.1.2 Zenek 6
+(adres 1.1.2 chce do Zenka 6Mbps)
++ PD -> NCC:	OK 1.1.2 Zenek 6 1.2.3
+  (PD odsyła że ok, zgadza się na takie połączenie przesyłając adres Zenka 1.2.3)
+  NCC -> A:		OK Zenek 6 1.2.3 77
+  (NCC odsyła że ok, mówi które połączenie (że Zenek i 6Mbps), daje adres docelowy, mówi jaki ma numerek połączenie)
+- PD -> NCC:	NO Zenek 6
+  NCC -> A:		NO Zenek 6
+
+4. Teraz NCC mówi co się dzieje CC (to oc było dawniej)
+...
