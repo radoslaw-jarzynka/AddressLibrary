@@ -312,17 +312,19 @@ a klient B to Zenek - 1.2.3
 	+ PD -> NCC:	OK 1.1.2 Zenek 6 1.2.3
 	  (PD odsyła że ok, zgadza się na takie połączenie przesyłając adres Zenka 1.2.3)  
 	  (tu jak chesz mogę wysłać info że policy się zgadza typu:) 
-	  (YES Zenek)
+	  (NCC -> A:	YES Zenek)
+	  NCC -> B:		CALLING Mietek 6 888
+	  (mówi Zenkowi że dzwoni Mietek 6Mbps o numerze requestu (nie połaczenia) 888)
+	(idź dalej do kroku 4.)
 	- PD -> NCC:	NO 1.1.2 Zenek 6
 	  NCC -> A:		NO Zenek
 	-> W przypadku NO, protokół się przerywa
 
 4. Akceptacja
-	NCC -> B:		CALLING Mietek 6
-	+ B -> NCC:		ACK Mietek 6
+	+ B -> NCC:		ACK Mietek 6 888
 	  NCC -> A:		ACK Zenek
-	(protokół idzie dalej)
-	- B -> NCC:		NCK Mietek 6
+	(idź dalej do kroku 5.)
+	- B -> NCC:		NCK Mietek 6 888
 	  NCC -> A:		NCK Zenek
 	-> W przypadku NO, protokół się przerywa
 
