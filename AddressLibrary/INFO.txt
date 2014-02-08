@@ -279,7 +279,7 @@ Codename: proni
 Client A (A, Mietek, 1.1.2) inicjuje
 Clinet B (B, Zenek,	 1.2.3) odbiera
 
-1. ClientA loguje się do sieci do NCC
+1. Client A loguje się do sieci do NCC
 A -> NCC:		LOGIN 1.1.2 Mietek
 NCC -> PD:		LOGIN 1.1.2 Mietek
 + PD -> NCC:	LOGGED 1.1.2 Mietek
@@ -287,11 +287,13 @@ NCC -> PD:		LOGIN 1.1.2 Mietek
 - PD -> NCC		NAME_TAKEN 1.1.2 Mietek
   NCC -> A:		NAME_TAKEN
 
-2. ClientA wysyła request że chce nazwy innych klientów
+2. Client A wysyła request że chce nazwy innych klientów
 A -> NCC:		REQ_CLIENTS
 NCC -> PD:		REQ_CLIENTS
-PD- > NCC:		CLIENTS Zenek k2 k3 k4
+PD -> NCC:		CLIENTS Zenek k2 k3 k4
 NCC -> A:		CLIENTS Zenek k2 k3 k4
+
+--- tu kończy się niezależna sekcja - bez następstw przyczynowo-skutkowych
 
 3. A (Mietek) wybiera B (Zenek) i prosi o połacznie z nim np 6Mbps
 Mietek -> NCC:	REQ_CALL Zenek 6
@@ -299,11 +301,48 @@ Mietek -> NCC:	REQ_CALL Zenek 6
 NCC -> PD:		REQ_CALL 1.1.2 Zenek 6
 (adres 1.1.2 chce do Zenka 6Mbps)
 + PD -> NCC:	OK 1.1.2 Zenek 6 1.2.3
-  (PD odsyła że ok, zgadza się na takie połączenie przesyłając adres Zenka 1.2.3)
-  NCC -> A:		OK Zenek 6 1.2.3 77
-  (NCC odsyła że ok, mówi które połączenie (że Zenek i 6Mbps), daje adres docelowy, mówi jaki ma numerek połączenie)
+  (PD odsyła że ok, zgadza się na takie połączenie przesyłając adres Zenka 1.2.3)  
 - PD -> NCC:	NO 1.1.2 Zenek 6
   NCC -> A:		NO Zenek 6
 
-4. Teraz NCC mówi co się dzieje CC (to oc było dawniej)
-...
+-> W przypadku NO, protokół się przerywa
+
+3,5. Akceptacja
+NCC -> B:		ACCEPT Mietek
++ B -> NCC:		OK Mietek
+(protokół idzie dalej)
+- B -> NCC:		NO Mietek
+  NCC -> B:		NO Zenek 6
+
+-> W przypadku NO, protokół się przerywa
+
+4. Teraz NCC mówi co się dzieje CC
+NCC -> CC(A):	REQ_CONN 1.1.2 1.2.3 77	
+NCC -> CC(A):	REQ_CONN 1.1.2 1.2.3 86
+NCC -> CC(A):	REQ_CONN 1.1.2 1.2.3 95
+(3 połączenia bo 6Mbps - najpierw przetestujemy z 1 bo może się nie udać z kilkoma:p )
+
+5. Jak się uda połączenie dane zestawić (pojedyncze)
+CC(A) -> NCC:	CONN_EST 77
+CC(A) -> NCC:	CONN_EST 86
+CC(A) -> NCC:	CONN_EST 95
+Jeśli to wszytkie połączenia które były żądane (dla 6Mbps to 3)
+NCC -> A:		CONN_EST Zenek 6
+
+6. Jak się nie uda conajmniej 1 z nich
+CC(A) -> NCC:	CONN_NOEST 77
+NCC -> A:		CONN_NOEST Zenek 6
+
+7. Rozłączanie (wywoływane też podobnie dla jednego połączenia gdy jest nie udane)
+A -> NCC:		CONN_DISCONN Zenek 6
+NCC -> CC(A):	REQ_CONN 77	
+NCC -> CC(A):	REQ_CONN 86
+NCC -> CC(A):	REQ_CONN 95
+(tutaj oszukamy że od razu wysyłam informację o tym że połączenia zostały rozłaczone bo bym się zajebał)
+NCC -> A:		CONN_DISCONN Zenek 6
+
+8. Zamknięcie X węzła:
+CC -> NCC:		CONN_LOST 77
+(tu zostaje kwestia CC że coś się rozjebało i żeby rozłączył swoje połączenia)
+NCC -> A:		CONN_LOST Zenek 6
+NCC -> B:		CONN_LOST Zenek 6
